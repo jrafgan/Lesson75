@@ -5,18 +5,30 @@ class ProductForm extends Component {
   state = {
     title: '',
     price: '',
-    description: ''
+    description: '',
+    image: ''
   };
 
   submitFormHandler = event => {
     event.preventDefault();
 
-    this.props.onSubmit(this.state);
+    const formData = new FormData();
+    Object.keys(this.state).forEach(key => {
+      formData.append(key, this.state[key]);
+    });
+
+    this.props.onSubmit(formData);
   };
 
   inputChangeHandler = event => {
     this.setState({
       [event.target.name]: event.target.value
+    });
+  };
+
+  fileChangeHandler = event => {
+    this.setState({
+      [event.target.name]: event.target.files[0]
     });
   };
 
@@ -64,6 +76,19 @@ class ProductForm extends Component {
               name="description"
               value={this.state.description}
               onChange={this.inputChangeHandler}
+            />
+          </Col>
+        </FormGroup>
+
+        <FormGroup controlId="productImage">
+          <Col componentClass={ControlLabel} sm={2}>
+            Image
+          </Col>
+          <Col sm={10}>
+            <FormControl
+              type="file"
+              name="image"
+              onChange={this.fileChangeHandler}
             />
           </Col>
         </FormGroup>
