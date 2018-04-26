@@ -1,8 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import {Button, Image, PageHeader, Panel} from "react-bootstrap";
+import {Button, PageHeader} from "react-bootstrap";
 import {fetchProducts} from "../../store/actions/products";
 import {Link} from "react-router-dom";
+
+import ProductListItem from '../../components/ProductListItem/ProductListItem';
 
 class Products extends Component {
   componentDidMount() {
@@ -22,23 +24,13 @@ class Products extends Component {
         </PageHeader>
 
         {this.props.products.map(product => (
-          <Panel key={product.id}>
-            <Panel.Body>
-              { product.image &&
-                <Image
-                  style={{width: '100px', marginRight: '10px'}}
-                  src={'http://localhost:8000/uploads/' + product.image}
-                  thumbnail
-                />
-              }
-              <Link to={'/products/' + product.id}>
-                {product.title}
-              </Link>
-              <strong style={{marginLeft: '10px'}}>
-                {product.price} KGS
-              </strong>
-            </Panel.Body>
-          </Panel>
+          <ProductListItem
+            key={product._id}
+            id={product._id}
+            title={product.title}
+            price={product.price}
+            image={product.image}
+          />
         ))}
       </Fragment>
     );
