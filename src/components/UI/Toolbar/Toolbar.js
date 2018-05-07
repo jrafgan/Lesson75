@@ -8,11 +8,15 @@ const Toolbar = () => (
       <Navbar.Brand>
         <LinkContainer to="/" exact><a>Shop</a></LinkContainer>
       </Navbar.Brand>
+      <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav pullRight>
         <LinkContainer to="/" exact>
           <NavItem>Products</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/register" exact>
+          <NavItem>Sign Up</NavItem>
         </LinkContainer>
       </Nav>
     </Navbar.Collapse>
