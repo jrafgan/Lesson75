@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Nav, Navbar, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
-const Toolbar = () => (
+const Toolbar = ({user}) => ( // {user: {}}
   <Navbar>
     <Navbar.Header>
       <Navbar.Brand>
@@ -15,9 +15,26 @@ const Toolbar = () => (
         <LinkContainer to="/" exact>
           <NavItem>Products</NavItem>
         </LinkContainer>
-        <LinkContainer to="/register" exact>
-          <NavItem>Sign Up</NavItem>
-        </LinkContainer>
+        {user ?
+          <Fragment>
+            <LinkContainer to="/profile" exact>
+              <NavItem>Hello, {user.username}!</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/logout" exact>
+              <NavItem>Logout</NavItem>
+            </LinkContainer>
+          </Fragment>
+          :
+          <Fragment>
+            <LinkContainer to="/register" exact>
+              <NavItem>Sign Up</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/login" exact>
+              <NavItem>Login</NavItem>
+            </LinkContainer>
+          </Fragment>
+        }
+
       </Nav>
     </Navbar.Collapse>
   </Navbar>

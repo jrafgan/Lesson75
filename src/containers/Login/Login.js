@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
-import {Button, Col, Form, FormGroup, PageHeader} from "react-bootstrap";
-import {registerUser} from "../../store/actions/users";
+import {Alert, Button, Col, Form, FormGroup, PageHeader} from "react-bootstrap";
 import FormElement from "../../components/UI/Form/FormElement";
+import {loginUser} from "../../store/actions/users";
 
-class Register extends Component {
+class Login extends Component {
   state = {
     username: '',
     password: ''
@@ -19,19 +19,17 @@ class Register extends Component {
   submitFormHandler = event => {
     event.preventDefault();
 
-    this.props.registerUser(this.state);
-  };
-
-  fieldHasError = fieldName => {
-    return this.props.error && this.props.error.errors[fieldName];
+    this.props.loginUser(this.state);
   };
 
   render() {
     return (
       <Fragment>
-        <PageHeader>Register new user</PageHeader>
+        <PageHeader>Login</PageHeader>
         <Form horizontal onSubmit={this.submitFormHandler}>
-
+          {this.props.error &&
+            <Alert bsStyle="danger">{this.props.error.error}</Alert>
+          }
           <FormElement
             propertyName="username"
             title="Username"
@@ -39,8 +37,7 @@ class Register extends Component {
             type="text"
             value={this.state.username}
             changeHandler={this.inputChangeHandler}
-            autoComplete="new-username"
-            error={this.fieldHasError('username') && this.props.error.errors.username.message}
+            autoComplete="current-username"
           />
 
           <FormElement
@@ -50,8 +47,7 @@ class Register extends Component {
             type="password"
             value={this.state.password}
             changeHandler={this.inputChangeHandler}
-            autoComplete="new-password"
-            error={this.fieldHasError('password') && this.props.error.errors.password.message}
+            autoComplete="current-password"
           />
 
           <FormGroup>
@@ -59,7 +55,7 @@ class Register extends Component {
               <Button
                 bsStyle="primary"
                 type="submit"
-              >Register</Button>
+              >Login</Button>
             </Col>
           </FormGroup>
         </Form>
@@ -69,11 +65,11 @@ class Register extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.users.registerError
+  error: state.users.loginError
 });
 
 const mapDispatchToProps = dispatch => ({
-  registerUser: userData => dispatch(registerUser(userData))
+  loginUser: userData => dispatch(loginUser(userData))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
