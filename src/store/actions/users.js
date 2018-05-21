@@ -1,4 +1,5 @@
 import axios from '../../axios-api';
+import {NotificationManager} from 'react-notifications';
 import {push} from 'react-router-redux';
 import {
   LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,
@@ -19,6 +20,7 @@ export const registerUser = userData => {
       response => {
         dispatch(registerUserSuccess());
         dispatch(push('/'));
+        NotificationManager.success('Success', 'Registration successful');
       },
       error => {
         dispatch(registerUserFailure(error.response.data));
@@ -41,6 +43,7 @@ export const loginUser = userData => {
       response => {
         dispatch(loginUserSuccess(response.data.user));
         dispatch(push('/'));
+        NotificationManager.success('Success', 'Login successful');
       },
       error => {
         const errorObj = error.response ? error.response.data : {error: 'No internet'};
@@ -58,9 +61,10 @@ export const logoutUser = () => {
       response => {
         dispatch({type: LOGOUT_USER});
         dispatch(push('/'));
+        NotificationManager.success('Success', 'Logout successful');
       },
       error => {
-        console.log('Could not logout');
+        NotificationManager.error('Error', 'Could not logout');
       }
     );
   }

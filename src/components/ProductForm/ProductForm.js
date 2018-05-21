@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Button, Col, ControlLabel, Form, FormControl, FormGroup} from "react-bootstrap";
+import FormElement from "../UI/Form/FormElement";
 
 class ProductForm extends Component {
   state = {
+    category: '',
     title: '',
     price: '',
     description: '',
@@ -33,65 +35,56 @@ class ProductForm extends Component {
   };
 
   render() {
+    const categories = [
+      {title: 'category1', id: 'id1'}, {title: 'category2', id: 'id2'}
+    ];
+
     return (
       <Form horizontal onSubmit={this.submitFormHandler}>
-        <FormGroup controlId="productTitle">
-          <Col componentClass={ControlLabel} sm={2}>
-            Title
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              type="text" required
-              placeholder="Enter product title"
-              name="title"
-              value={this.state.title}
-              onChange={this.inputChangeHandler}
-            />
-          </Col>
-        </FormGroup>
 
-        <FormGroup controlId="productPrice">
-          <Col componentClass={ControlLabel} sm={2}>
-            Price
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              type="number" min="0" required
-              placeholder="Enter product price"
-              name="price"
-              value={this.state.price}
-              onChange={this.inputChangeHandler}
-            />
-          </Col>
-        </FormGroup>
+        <FormElement
+          propertyName="category"
+          title="Product category"
+          type="select"
+          options={categories}
+          value={this.state.category}
+          changeHandler={this.inputChangeHandler}
+          required
+        />
 
-        <FormGroup controlId="productDescription">
-          <Col componentClass={ControlLabel} sm={2}>
-            Description
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              componentClass="textarea"
-              placeholder="Enter description"
-              name="description"
-              value={this.state.description}
-              onChange={this.inputChangeHandler}
-            />
-          </Col>
-        </FormGroup>
+        <FormElement
+          propertyName="title"
+          title="Product title"
+          type="text"
+          value={this.state.title}
+          changeHandler={this.inputChangeHandler}
+          required
+        />
 
-        <FormGroup controlId="productImage">
-          <Col componentClass={ControlLabel} sm={2}>
-            Image
-          </Col>
-          <Col sm={10}>
-            <FormControl
-              type="file"
-              name="image"
-              onChange={this.fileChangeHandler}
-            />
-          </Col>
-        </FormGroup>
+        <FormElement
+          propertyName="price"
+          title="Product price"
+          type="number"
+          value={this.state.price}
+          changeHandler={this.inputChangeHandler}
+          required
+        />
+
+        <FormElement
+          propertyName="description"
+          title="Product description"
+          type="textarea"
+          value={this.state.price}
+          changeHandler={this.inputChangeHandler}
+          required
+        />
+
+        <FormElement
+          propertyName="image"
+          title="Product image"
+          type="file"
+          changeHandler={this.fileChangeHandler}
+        />
 
         <FormGroup>
           <Col smOffset={2} sm={10}>

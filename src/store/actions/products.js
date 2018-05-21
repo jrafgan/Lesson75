@@ -18,8 +18,12 @@ export const createProductSuccess = () => {
 };
 
 export const createProduct = productData => {
-  return dispatch => {
-    return axios.post('/products', productData).then(
+  return (dispatch, getState) => {
+    const headers = {
+      'Token': getState().users.user.token
+    };
+
+    return axios.post('/products', productData, {headers}).then(
       response => dispatch(createProductSuccess())
     );
   };
