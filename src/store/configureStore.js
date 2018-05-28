@@ -5,11 +5,13 @@ import createHistory from "history/createBrowserHistory";
 
 import usersReducer from "./reducers/users";
 import productsReducer from "./reducers/products";
+import categoriesReducer from "./reducers/categories";
 import {saveState, loadState} from "./localStorage";
 
 const rootReducer = combineReducers({
   products: productsReducer,
   users: usersReducer,
+  categories: categoriesReducer,
   routing: routerReducer
 });
 

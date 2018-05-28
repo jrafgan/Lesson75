@@ -1,4 +1,5 @@
 import axios from '../../axios-api';
+import {push} from "react-router-redux";
 import {CREATE_PRODUCT_SUCCESS, FETCH_PRODUCTS_SUCCESS} from "./actionTypes";
 
 export const fetchProductsSuccess = products => {
@@ -18,13 +19,12 @@ export const createProductSuccess = () => {
 };
 
 export const createProduct = productData => {
-  return (dispatch, getState) => {
-    const headers = {
-      'Token': getState().users.user.token
-    };
-
-    return axios.post('/products', productData, {headers}).then(
-      response => dispatch(createProductSuccess())
+  return dispatch => {
+    return axios.post('/products', productData).then(
+      response => {
+        dispatch(createProductSuccess());
+        dispatch(push('/'));
+      }
     );
   };
 };

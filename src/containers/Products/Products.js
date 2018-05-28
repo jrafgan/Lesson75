@@ -16,11 +16,13 @@ class Products extends Component {
       <Fragment>
         <PageHeader>
           Products
-          <Link to="/products/new">
-            <Button bsStyle="primary" className="pull-right">
-              Add product
-            </Button>
-          </Link>
+          { this.props.user && this.props.user.role === 'admin' &&
+            <Link to="/products/new">
+              <Button bsStyle="primary" className="pull-right">
+                Add product
+              </Button>
+            </Link>
+          }
         </PageHeader>
 
         {this.props.products.map(product => (
@@ -39,7 +41,8 @@ class Products extends Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products.products
+    products: state.products.products,
+    user: state.users.user
   }
 };
 

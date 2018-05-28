@@ -29,8 +29,8 @@ export const registerUser = userData => {
   };
 };
 
-const loginUserSuccess = user => {
-  return {type: LOGIN_USER_SUCCESS, user};
+const loginUserSuccess = (user, token) => {
+  return {type: LOGIN_USER_SUCCESS, user, token};
 };
 
 const loginUserFailure = error => {
@@ -41,9 +41,9 @@ export const loginUser = userData => {
   return dispatch => {
     return axios.post('/users/sessions', userData).then(
       response => {
-        dispatch(loginUserSuccess(response.data.user));
+        dispatch(loginUserSuccess(response.data.user, response.data.token));
         dispatch(push('/'));
-        NotificationManager.success('Success', 'Login successful');
+        NotificationManager.success('Success', response.data.message);
       },
       error => {
         const errorObj = error.response ? error.response.data : {error: 'No internet'};
@@ -67,5 +67,13 @@ export const logoutUser = () => {
         NotificationManager.error('Error', 'Could not logout');
       }
     );
+  }
+};
+
+export const logoutExpiredUser = () => {
+  return dispatch => {
+    dispatch({type: LOGOUT_USER});
+    dispatch(push('/login'));
+    NotificationManager.error('Error', 'Your session has expired, please login again');
   }
 };

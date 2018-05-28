@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, ControlLabel, Form, FormControl, FormGroup} from "react-bootstrap";
+import {Button, Col, Form, FormGroup} from "react-bootstrap";
 import FormElement from "../UI/Form/FormElement";
 
 class ProductForm extends Component {
@@ -35,13 +35,12 @@ class ProductForm extends Component {
   };
 
   render() {
-    const categories = [
-      {title: 'category1', id: 'id1'}, {title: 'category2', id: 'id2'}
-    ];
+    const categories = this.props.categories.map(category => {
+      return {id: category._id, title: category.title};
+    });
 
     return (
       <Form horizontal onSubmit={this.submitFormHandler}>
-
         <FormElement
           propertyName="category"
           title="Product category"
@@ -74,7 +73,7 @@ class ProductForm extends Component {
           propertyName="description"
           title="Product description"
           type="textarea"
-          value={this.state.price}
+          value={this.state.description}
           changeHandler={this.inputChangeHandler}
           required
         />
