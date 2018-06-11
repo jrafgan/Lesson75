@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Button, Col, Form, FormGroup, PageHeader} from "react-bootstrap";
 import {registerUser} from "../../store/actions/users";
 import FormElement from "../../components/UI/Form/FormElement";
+import FacebookLogin from "../../components/Auth/FacebookLogin/FacebookLogin";
 
 class Register extends Component {
   state = {
@@ -26,11 +27,23 @@ class Register extends Component {
     return this.props.error && this.props.error.errors[fieldName];
   };
 
+  facebookResponse = response => {
+    if (response.id) {
+      this.props.facebookLogin(response);
+    }
+  };
+
   render() {
     return (
       <Fragment>
         <PageHeader>Register new user</PageHeader>
         <Form horizontal onSubmit={this.submitFormHandler}>
+
+          <FormGroup>
+            <Col smOffset={2} sm={10}>
+              <FacebookLogin />
+            </Col>
+          </FormGroup>
 
           <FormElement
             propertyName="username"

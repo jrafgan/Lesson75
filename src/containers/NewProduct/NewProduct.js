@@ -28,14 +28,12 @@ class NewProduct extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onProductCreated: productData => {
-      return dispatch(createProduct(productData))
-    },
-    fetchCategories: () => dispatch(fetchCategories())
-  }
-};
+const mapDispatchToProps = dispatch => ({
+  onProductCreated: productData => {
+    return dispatch(createProduct(productData))
+  },
+  fetchCategories: () => dispatch(fetchCategories())
+});
 
 const mapStateToProps = state => ({
   categories: state.categories.allCategories

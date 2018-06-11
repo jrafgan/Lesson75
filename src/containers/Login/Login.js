@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Alert, Button, Col, Form, FormGroup, PageHeader} from "react-bootstrap";
 import FormElement from "../../components/UI/Form/FormElement";
 import {loginUser} from "../../store/actions/users";
+import FacebookLogin from "../../components/Auth/FacebookLogin/FacebookLogin";
 
 class Login extends Component {
   state = {
@@ -30,6 +31,13 @@ class Login extends Component {
           {this.props.error &&
             <Alert bsStyle="danger">{this.props.error.error}</Alert>
           }
+
+          <FormGroup>
+            <Col smOffset={2} sm={10}>
+              <FacebookLogin />
+            </Col>
+          </FormGroup>
+
           <FormElement
             propertyName="username"
             title="Username"

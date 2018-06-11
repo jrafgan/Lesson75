@@ -23,8 +23,10 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(response => response,
   error => {
-    if (error.response.status === 401) {
+    if (error.response && error.response.status === 401) {
       store.dispatch(logoutExpiredUser());
+    } else {
+      return Promise.reject(error);
     }
   });
 

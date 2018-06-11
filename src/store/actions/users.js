@@ -77,3 +77,18 @@ export const logoutExpiredUser = () => {
     NotificationManager.error('Error', 'Your session has expired, please login again');
   }
 };
+
+export const facebookLogin = data => {
+  return dispatch => {
+    axios.post('/users/facebookLogin', data).then(
+      response => {
+        dispatch(loginUserSuccess(response.data.user, response.data.token));
+        dispatch(push('/'));
+        NotificationManager.success('Logged in with Facebook!', 'Success');
+      },
+      error => {
+        dispatch(loginUserFailure(error.response.data));
+      }
+    )
+  };
+};
