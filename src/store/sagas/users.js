@@ -7,7 +7,7 @@ import {registerUserFailure, registerUserSuccess} from "../actions/users";
 
 export function* registerUserSaga(action) {
   try {
-    const response = yield axios.post('/users', action.userData);
+    yield axios.post('/users', action.userData);
     yield put(registerUserSuccess());
     yield put(push('/'));
     yield NotificationManager.success('Success', 'Registration successful');
