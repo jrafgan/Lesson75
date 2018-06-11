@@ -3,30 +3,19 @@ import {NotificationManager} from 'react-notifications';
 import {push} from 'react-router-redux';
 import {
   LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,
-  REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS
+  REGISTER_USER, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS
 } from "./actionTypes";
 
-const registerUserSuccess = () => {
+export const registerUserSuccess = () => {
   return {type: REGISTER_USER_SUCCESS};
 };
 
-const registerUserFailure = error => {
+export const registerUserFailure = error => {
   return {type: REGISTER_USER_FAILURE, error};
 };
 
 export const registerUser = userData => {
-  return dispatch => {
-    return axios.post('/users', userData).then(
-      response => {
-        dispatch(registerUserSuccess());
-        dispatch(push('/'));
-        NotificationManager.success('Success', 'Registration successful');
-      },
-      error => {
-        dispatch(registerUserFailure(error.response.data));
-      }
-    );
-  };
+  return {type: REGISTER_USER, userData};
 };
 
 const loginUserSuccess = (user, token) => {
